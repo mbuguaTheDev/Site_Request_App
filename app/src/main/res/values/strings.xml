@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Site Request App</string>
+
+<!--    login screen-->
+    <string name="loginText">Please Login to continue</string>
+    <string name="loginButton">LOGIN</string>
+    <string name="emailPlaceholder">Email</string>
+    <string name="pwdPlaceholder">Password</string>
+
+
+<!--    main home screen-->
+    <string name="mainWelcome">Welcome.<br>What do you want to do today?</br></string>
+    <string name="siteReqBtn">SITE REQUEST</string>
+    <string name="DailyRptBtn">DAILY REPORT</string>
+    <string name="SalaryInputBtn">SALARY INPUT</string>
+
+
+<!--  supply request screen  -->
+    <string name="itemInput">Item</string>
+    <string name="qtyInput">Quantity</string>
+    <string name="dateRequired">Date Required</string>
+    <string name="submitText">SUBMIT</string>
+    <string name="siteRequestWelcome">Make a site supply request</string>
+
+
+    <!-- Daily Report form fields-->
+    <string name="dailyRptWelcome">Submit your daily report</string>
+    <string name="Temp">Temperature</string>
+    <string name="highTemp">High Temperature</string>
+    <string name="lowTemp">Low Temperature</string>
+
+
+    <string name="partlyCloudy">Partly Cloudy</string>
+    <string name="cloudy">Cloudy</string>
+    <string name="windy">Windy</string>
+    <string name="rainy">Rainy</string>
+    <string name="snow">Snow</string>
+    <string name="other">Other</string>
+
+    <string name="siteVisitors">Visitors to the site</string>
+    <string name="inspections">Tests / Inspections</string>
+    <string name="accidents">Accidents, Injuries or Unusual Events</string>
+    <string name="workProgress">Progress of Work</string>
+    <string name="itemsAccomplished">Items Accomplished</string>
+    <string name="meetings">Meetings and significant decisions</string>
+    <string name="unresolvedIssues">Unresolved Issues</string>
+    <string name="otherNotes">Other notes</string>
+    <string name="preparedBy">Prepared By</string>
+    <string name="conditions">CONDITIONS</string>
+    <string name="weather">WEATHER</string>
+
+</resources>
