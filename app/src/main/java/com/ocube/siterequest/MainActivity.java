@@ -18,15 +18,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Main Screen Buttons
         Button siteRequest = findViewById(R.id.siteRequest);
         Button dailyReport = findViewById(R.id.dailyReport);
-        Button salaryInput = findViewById(R.id.salaryInput);
+        //Button salaryInput = findViewById(R.id.salaryInput);
 
 
         //Main screen buttons Onclick listeners
         siteRequest.setOnClickListener(this);
         dailyReport.setOnClickListener(this);
-        salaryInput.setOnClickListener(this);
+        //salaryInput.setOnClickListener(this);
 
     }
+
+
 
     //respond to the button clicks on the home screen
     @Override
@@ -42,10 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(dailyRptScreen);
                 break;
 
-            case R.id.salaryInput:
-                Intent salaryInputScreen = new Intent(this, SalaryInputActivity.class);
-                startActivity(salaryInputScreen);
-                break;
+//            case R.id.salaryInput:
+//                Intent salaryInputScreen = new Intent(this, SalaryInputActivity.class);
+//                startActivity(salaryInputScreen);
+//                break;
         }
 
     }

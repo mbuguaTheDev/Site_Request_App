@@ -1,25 +1,28 @@
 <resources>
     <string name="app_name">Site Request App</string>
 
-<!--    login screen-->
+    <!--    login screen-->
     <string name="loginText">Please Login to continue</string>
     <string name="loginButton">LOGIN</string>
     <string name="emailPlaceholder">Email</string>
     <string name="pwdPlaceholder">Password</string>
 
 
-<!--    main home screen-->
-    <string name="mainWelcome">Welcome.<br>What do you want to do today?</br></string>
+    <!--    main home screen-->
+    <string name="mainWelcome">Welcome. <br>What do you want to do today?</br></string>
     <string name="siteReqBtn">SITE REQUEST</string>
     <string name="DailyRptBtn">DAILY REPORT</string>
     <string name="SalaryInputBtn">SALARY INPUT</string>
 
 
-<!--  supply request screen  -->
-    <string name="itemInput">Item</string>
-    <string name="qtyInput">Quantity</string>
-    <string name="dateRequired">Date Required</string>
-    <string name="submitText">SUBMIT</string>
+    <!--  supply request screen  -->
+    <string name="itemInput">Product Name</string>
+    <string name="qtyInput">Quantity E.g 2</string>
+    <string name="units">Units E.g Cartons</string>
+    <string name="dateRequired">Needed In</string>
+    <string name="add">Add</string>
+    <string name="days">Days</string>
+    <string name="submitText">VIEW &amp; SUBMIT</string>
     <string name="siteRequestWelcome">Make a site supply request</string>
 
 
@@ -48,5 +51,15 @@
     <string name="preparedBy">Prepared By</string>
     <string name="conditions">CONDITIONS</string>
     <string name="weather">WEATHER</string>
+
+<!--  Resuested items header  -->
+
+    <string name="itemRq">Item</string>
+    <string name="quantityRq">Quantity</string>
+    <string name="unitsRq">Units</string>
+    <string name="neededIn">Needed In</string>
+
+<!--  Confirm Request  -->
+    <string name="confirmBtn">Confirm Request</string>
 
 </resources>
