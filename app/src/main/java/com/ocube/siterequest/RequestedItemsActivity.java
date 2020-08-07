@@ -52,8 +52,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
     }
 
     // Async Task with three override methods,
-    private class SyncData extends AsyncTask<String, String, String>
-    {
+    private class SyncData extends AsyncTask<String, String, String> {
         String msg = "Internet/DB_Credentials/Windows_FireWall_TurnOn Error, See Android Monitor in the bottom For details!";
         ProgressDialog progress;
 
@@ -166,7 +165,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
         {
             // create a new view
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View v = inflater.inflate(R.layout.items_content, parent, false);
+            View v = inflater.inflate(R.layout.requested_items_content, parent, false);
             ViewHolder vh = new ViewHolder(v);
             return vh;
         }

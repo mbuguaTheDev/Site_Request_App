@@ -33,11 +33,33 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/colorPrimary" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="40dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/selectItem"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="20dp"/>
+
+                <Spinner
+                    android:id="@+id/itemsSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"/>
+            </LinearLayout>
+
             <EditText
                 android:id="@+id/itemInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -61,11 +83,11 @@
                 style="@style/Widget.AppCompat.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
                 android:ems="10"
-                android:inputType="numberDecimal"
                 android:hint="@string/units"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:layout_marginBottom="30dp"/>
+                android:inputType="none|text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <EditText
                 android:id="@+id/daysInput"

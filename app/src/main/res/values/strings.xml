@@ -24,6 +24,7 @@
     <string name="days">Days</string>
     <string name="submitText">VIEW &amp; SUBMIT</string>
     <string name="siteRequestWelcome">Make a site supply request</string>
+    <string name="selectItem">Select Item :</string>
 
 
     <!-- Daily Report form fields-->
