@@ -2,11 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="40dp">
+    android:layout_marginVertical="5dp">
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/item"
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:textSize="18sp"
@@ -14,10 +22,10 @@
 
     <TextView
         android:id="@+id/qty"
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/item"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:textSize="18sp" />
 
     <TextView
@@ -29,9 +37,9 @@
 
     <TextView
         android:id="@+id/needed"
-        android:layout_width="70dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/units"
         android:textSize="18sp"/>
 

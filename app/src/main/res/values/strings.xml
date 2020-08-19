@@ -4,12 +4,12 @@
     <!--    login screen-->
     <string name="loginText">Please Login to continue</string>
     <string name="loginButton">LOGIN</string>
-    <string name="emailPlaceholder">Email</string>
+    <string name="emailPlaceholder">Username</string>
     <string name="pwdPlaceholder">Password</string>
 
 
     <!--    main home screen-->
-    <string name="mainWelcome">Welcome. <br>What do you want to do today?</br></string>
+    <string name="mainWelcome">Welcome. What do you want to do today?</string>
     <string name="siteReqBtn">SITE REQUEST</string>
     <string name="DailyRptBtn">DAILY REPORT</string>
     <string name="SalaryInputBtn">SALARY INPUT</string>
@@ -56,9 +56,9 @@
 <!--  Resuested items header  -->
 
     <string name="itemRq">Item</string>
-    <string name="quantityRq">Quantity</string>
+    <string name="quantityRq">Qty</string>
     <string name="unitsRq">Units</string>
-    <string name="neededIn">Needed In</string>
+    <string name="neededIn">Days</string>
 
 <!--  Confirm Request  -->
     <string name="confirmBtn">Confirm Request</string>

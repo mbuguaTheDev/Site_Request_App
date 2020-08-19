@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +23,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ocube.siterequest.LoginActivity.AGENT_ID;
+import static com.ocube.siterequest.LoginActivity.SHARED_PREFS;
 
 public class RequestedItemsActivity extends AppCompatActivity {
 
@@ -74,7 +78,9 @@ public class RequestedItemsActivity extends AppCompatActivity {
                     success = false;
                 }
                 else {
-                    String query = "select pname,rqty,units,day from request";
+                    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                    String agentId = sharedPreferences.getString(AGENT_ID, "");
+                    String query = "select pname,rqty,units,day from request where status = 'pending' and aid = '"+agentId+"' ";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null)
@@ -187,6 +193,10 @@ public class RequestedItemsActivity extends AppCompatActivity {
         public int getItemCount() {
             return values.size();
         }
+
+    }
+
+    public void submitRequest(){
 
     }
 }

@@ -2,6 +2,7 @@ package com.ocube.siterequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +17,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import static com.ocube.siterequest.LoginActivity.AGENT_ID;
+import static com.ocube.siterequest.LoginActivity.SHARED_PREFS;
+import static com.ocube.siterequest.LoginActivity.SITE_ID;
+import static com.ocube.siterequest.LoginActivity.USER_NAME;
 
 public class SiteRequestActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -53,6 +59,12 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
         String unit=unitsInput.getText().toString();
         String need=daysInput.getText().toString();
 
+        //agent details
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String agentId = sharedPreferences.getString(AGENT_ID, "");
+        String siteId = sharedPreferences.getString(SITE_ID, "");
+
+
         Statement statement;
         try {
             Connection conn = sqlConnection.Connect(); //Connection Object
@@ -67,13 +79,14 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
                 unitsInput.setText("");
                 daysInput.setText("");
 
+
                 //Show success
                 Toast.makeText(this,"ADDED",Toast.LENGTH_SHORT).show();
 
                 try{
                     statement = conn.createStatement();
                     //String deleteAllQuery = "DELETE FROM request"; //only for cleaning the table for testing
-                    String query2= "INSERT  INTO  request (sid,aid,date,pid,pname,rqty,units,day) VALUES('1','1','2020-01-01','1','" + pname + "','" + qty + "','"+unit+"','"+need+"') ";
+                    String query2= "INSERT  INTO  request (sid,aid,date,pid,pname,rqty,units,day) VALUES('"+ siteId + "','" + agentId + "','2020-01-01','1','" + pname + "','" + qty + "','"+unit+"','"+need+"') ";
                     ResultSet resultSet1 = statement.executeQuery(query2);
 
                 }catch (SQLException e) {
@@ -134,4 +147,5 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 }

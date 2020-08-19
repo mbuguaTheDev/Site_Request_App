@@ -3,28 +3,47 @@ package com.ocube.siterequest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import static com.ocube.siterequest.LoginActivity.AGENT_ID;
+import static com.ocube.siterequest.LoginActivity.SHARED_PREFS;
+import static com.ocube.siterequest.LoginActivity.USER_NAME;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    String username, welcome;
+    TextView welcomeText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toast.makeText(this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
 
         //Main Screen Buttons
         Button siteRequest = findViewById(R.id.siteRequest);
         Button dailyReport = findViewById(R.id.dailyReport);
         //Button salaryInput = findViewById(R.id.salaryInput);
+        welcomeText  = findViewById(R.id.welcomeText);
 
 
         //Main screen buttons Onclick listeners
         siteRequest.setOnClickListener(this);
         dailyReport.setOnClickListener(this);
         //salaryInput.setOnClickListener(this);
+
+        //show welcome text with username
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        username = sharedPreferences.getString(USER_NAME, "");
+        welcome = "Welcome " + username + ". What would you like to do today?";
+
+        welcomeText.setText(welcome);
 
     }
 

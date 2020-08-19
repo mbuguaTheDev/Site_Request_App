@@ -12,10 +12,10 @@ import java.sql.SQLException;
 public class SqlConnection {
 
     // sql connection variables
-    String ip = "fsn201.truehost.cloud:1434";
+    String ip = "192.168.0.13:49170";
     String db = "site";
     String user = "admin";
-    String password = "waramba@#12maxwell";
+    String password = "admin";
 
     @SuppressLint("NewApi")
     public Connection Connect()
