@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +22,16 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.ocube.siterequest.LoginActivity.AGENT_ID;
 import static com.ocube.siterequest.LoginActivity.SHARED_PREFS;
+import static com.ocube.siterequest.LoginActivity.SITE_ID;
+import static com.ocube.siterequest.LoginActivity.SITE_NAME;
+import static com.ocube.siterequest.LoginActivity.USER_NAME;
 
 public class RequestedItemsActivity extends AppCompatActivity {
 
@@ -35,11 +41,28 @@ public class RequestedItemsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private boolean success = false; // boolean
     private SqlConnection sqlConnection; //SQL Connection Variable
+    private String agentId, siteId, agentName, siteName;
+
+    Button submitRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requested_items);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        agentId = sharedPreferences.getString(AGENT_ID, "agentId");
+        siteId = sharedPreferences.getString(SITE_ID, "site");
+        agentName = sharedPreferences.getString(USER_NAME, "agent");
+        siteName = sharedPreferences.getString(SITE_NAME, "site");
+
+        submitRequest = findViewById(R.id.submitRequest);
+        submitRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submitRequest();
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -53,6 +76,47 @@ public class RequestedItemsActivity extends AppCompatActivity {
         // Calling Async Task
         SyncData orderData = new SyncData();
         orderData.execute("");
+    }
+
+    public void submitRequest() {
+
+        try {
+
+            Statement statement;
+            Connection conn = sqlConnection.Connect(); //Connection Object
+            statement = conn.createStatement();
+            String submitRequestQuery = "UPDATE request SET status = 'open' WHERE aid = '" + agentId + "' ";
+            statement.executeQuery(submitRequestQuery);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        updateOrder();
+
+        //go back to the request screen
+        finish();
+
+
+
+    }
+
+    public void updateOrder() {
+
+        try {
+
+            Statement statement;
+            Connection conn = sqlConnection.Connect(); //Connection Object
+            statement = conn.createStatement();
+            String postOrderQuery = "UPDATE requetorder SET status = 'posted' WHERE agentid = '" + agentId + "' ";
+            statement.executeQuery(postOrderQuery);
+
+            //Toast.makeText(this, "New Request Created Successfully", Toast.LENGTH_SHORT).show();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Async Task with three override methods,
@@ -78,8 +142,6 @@ public class RequestedItemsActivity extends AppCompatActivity {
                     success = false;
                 }
                 else {
-                    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                    String agentId = sharedPreferences.getString(AGENT_ID, "");
                     String query = "select pname,rqty,units,day from request where status = 'pending' and aid = '"+agentId+"' ";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
@@ -137,8 +199,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
         private List<RequestedItemsModel> values;
         public Context context;
 
-        public class ViewHolder extends RecyclerView.ViewHolder
-        {
+        public class ViewHolder extends RecyclerView.ViewHolder {
             public TextView pName;
             public TextView qty;
             public TextView units;
@@ -146,8 +207,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
 
             public View layout;
 
-            public ViewHolder(View v)
-            {
+            public ViewHolder(View v) {
                 super(v);
                 layout = v;
                 pName = v.findViewById(R.id.item);
@@ -159,16 +219,14 @@ public class RequestedItemsActivity extends AppCompatActivity {
         }
 
         // Constructor
-        public MyAppAdapter(List<RequestedItemsModel> myDataset, Context context)
-        {
+        public MyAppAdapter(List<RequestedItemsModel> myDataset, Context context) {
             values = myDataset;
             this.context = context;
         }
 
         // Create new views (invoked by the layout manager) and inflates
         @Override
-        public MyAppAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-        {
+        public MyAppAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             // create a new view
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             View v = inflater.inflate(R.layout.requested_items_content, parent, false);
@@ -191,12 +249,11 @@ public class RequestedItemsActivity extends AppCompatActivity {
         // get item count returns the list item count
         @Override
         public int getItemCount() {
+
             return values.size();
         }
 
-    }
-
-    public void submitRequest(){
 
     }
+
 }

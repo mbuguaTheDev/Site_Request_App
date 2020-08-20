@@ -25,9 +25,10 @@ public class LoginActivity extends AppCompatActivity {
 
     //getting user details
     public static final String SHARED_PREFS = "userdetails";
-    public  static final String USER_NAME = "user";
-    public  static final String AGENT_ID = "agentId";
-    public  static final String SITE_ID = "siteId";
+    public static final String USER_NAME = "user";
+    public static final String AGENT_ID = "agentId";
+    public static final String SITE_ID = "siteId";
+    public static final String SITE_NAME = "sitename";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString(USER_NAME,rs.getString("name"));
                     editor.putString(AGENT_ID, rs.getString("id"));
                     editor.putString(SITE_ID, rs.getString("sid"));
+                    editor.putString(SITE_NAME,rs.getString("site"));
                     editor.apply();
 
                     connect.close();

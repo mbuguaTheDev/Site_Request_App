@@ -1,6 +1,7 @@
 package com.ocube.siterequest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.ocube.siterequest.LoginActivity.AGENT_ID;
+
 import static com.ocube.siterequest.LoginActivity.SHARED_PREFS;
 import static com.ocube.siterequest.LoginActivity.USER_NAME;
 
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText(this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
+
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         //Main Screen Buttons
         Button siteRequest = findViewById(R.id.siteRequest);

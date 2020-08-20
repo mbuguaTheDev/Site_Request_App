@@ -21,17 +21,28 @@ import java.util.ArrayList;
 import static com.ocube.siterequest.LoginActivity.AGENT_ID;
 import static com.ocube.siterequest.LoginActivity.SHARED_PREFS;
 import static com.ocube.siterequest.LoginActivity.SITE_ID;
+import static com.ocube.siterequest.LoginActivity.SITE_NAME;
 import static com.ocube.siterequest.LoginActivity.USER_NAME;
 
 public class SiteRequestActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private SqlConnection sqlConnection; //SQL Connection Variable
+    private String agentId, siteId, agentName, siteName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_request);
         sqlConnection = new SqlConnection(); //instantiate connection
+
+        //get all the agent details
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        agentId = sharedPreferences.getString(AGENT_ID, "agentId");
+        siteId = sharedPreferences.getString(SITE_ID, "site");
+        agentName = sharedPreferences.getString(USER_NAME, "agent");
+        siteName = sharedPreferences.getString(SITE_NAME, "site");
+
+        checkReqStatus();
         getItemsList();
 
         Button viewRequest = findViewById(R.id.viewRequest);
@@ -41,6 +52,7 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
                 openRequestView();
             }
         });
+
 
     }
 
@@ -58,11 +70,6 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
         String qty=qtyInput.getText().toString();
         String unit=unitsInput.getText().toString();
         String need=daysInput.getText().toString();
-
-        //agent details
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String agentId = sharedPreferences.getString(AGENT_ID, "");
-        String siteId = sharedPreferences.getString(SITE_ID, "");
 
 
         Statement statement;
@@ -86,8 +93,13 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
                 try{
                     statement = conn.createStatement();
                     //String deleteAllQuery = "DELETE FROM request"; //only for cleaning the table for testing
-                    String query2= "INSERT  INTO  request (sid,aid,date,pid,pname,rqty,units,day) VALUES('"+ siteId + "','" + agentId + "','2020-01-01','1','" + pname + "','" + qty + "','"+unit+"','"+need+"') ";
-                    ResultSet resultSet1 = statement.executeQuery(query2);
+                    String reqIdQuery = "SELECT id FROM requetorder WHERE agentid = '"+agentId+"' AND status ='open' ";
+                    ResultSet rs = statement.executeQuery(reqIdQuery);
+                    if (rs.next()){
+                        String requestId = rs.getString("id");
+                        String query2= "INSERT  INTO  request (sid,aid,date,pid,pname,rqty,units,day,requestid) VALUES('"+ siteId + "','" + agentId + "','2020-01-01','1','" + pname + "','" + qty + "','"+unit+"','"+need+"', '"+requestId+"') ";
+                        statement.executeQuery(query2);
+                    }
 
                 }catch (SQLException e) {
                     e.printStackTrace();
@@ -145,6 +157,60 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    //check if there is pending request and hide new request button
+    public void checkReqStatus(){
+        final Button newReqBtn;
+        final View requestScroll;
+
+        newReqBtn = findViewById(R.id.newRequestBtn);
+        requestScroll = findViewById(R.id.requestScroll);
+
+        try {
+            Statement statement;
+            Connection conn = sqlConnection.Connect(); //Connection Object
+            statement = conn.createStatement();
+            String reqOrderQuery = "Select * from requetorder where agentid = '"+agentId+"' and status = 'open'";
+            ResultSet rs = statement.executeQuery(reqOrderQuery);
+            if (rs.next()) {
+                newReqBtn.setVisibility(View.GONE);
+            }else{
+                newReqBtn.setVisibility(View.VISIBLE);
+                requestScroll.setVisibility(View.GONE);
+
+                newReqBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        createNewRequest();
+                        newReqBtn.setVisibility(View.GONE);
+                        requestScroll.setVisibility(View.VISIBLE);
+
+                    }
+                });
+            }
+
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void createNewRequest(){
+        try {
+
+            Statement statement;
+            Connection conn = sqlConnection.Connect(); //Connection Object
+            statement = conn.createStatement();
+            String newRequestQuery ="INSERT INTO requetorder (siteid, agentid, date, sitename, agentname, status) VALUES ('"+siteId+"', '"+agentId+"', '2020-01-01', '"+siteName+"', '"+agentName+"', 'open' )";
+            statement.executeQuery(newRequestQuery);
+            //Toast.makeText(this, "New Request Created Successfully", Toast.LENGTH_SHORT).show();
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

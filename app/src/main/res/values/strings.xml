@@ -16,6 +16,7 @@
 
 
     <!--  supply request screen  -->
+    <string name="newRequest">New Site Request</string>
     <string name="itemInput">Product Name</string>
     <string name="qtyInput">Quantity E.g 2</string>
     <string name="units">Units E.g Cartons</string>
@@ -54,7 +55,6 @@
     <string name="weather">WEATHER</string>
 
 <!--  Resuested items header  -->
-
     <string name="itemRq">Item</string>
     <string name="quantityRq">Qty</string>
     <string name="unitsRq">Units</string>
