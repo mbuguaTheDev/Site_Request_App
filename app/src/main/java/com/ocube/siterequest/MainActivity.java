@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Main Screen Buttons
         Button siteRequest = findViewById(R.id.siteRequest);
         Button dailyReport = findViewById(R.id.dailyReport);
-        //Button salaryInput = findViewById(R.id.salaryInput);
+        Button salaryInput = findViewById(R.id.salaryInput);
         welcomeText  = findViewById(R.id.welcomeText);
 
 
         //Main screen buttons Onclick listeners
         siteRequest.setOnClickListener(this);
         dailyReport.setOnClickListener(this);
-        //salaryInput.setOnClickListener(this);
+        salaryInput.setOnClickListener(this);
 
         //show welcome text with username
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(dailyRptScreen);
                 break;
 
-//            case R.id.salaryInput:
-//                Intent salaryInputScreen = new Intent(this, SalaryInputActivity.class);
-//                startActivity(salaryInputScreen);
-//                break;
+            case R.id.salaryInput:
+                Intent salaryInputScreen = new Intent(this, SalaryInputActivity.class);
+                startActivity(salaryInputScreen);
+                break;
         }
 
     }

@@ -31,16 +31,21 @@
     <!-- Daily Report form fields-->
     <string name="dailyRptWelcome">Submit your daily report</string>
     <string name="Temp">Temperature</string>
-    <string name="highTemp">High Temperature</string>
-    <string name="lowTemp">Low Temperature</string>
 
 
-    <string name="partlyCloudy">Partly Cloudy</string>
-    <string name="cloudy">Cloudy</string>
-    <string name="windy">Windy</string>
-    <string name="rainy">Rainy</string>
-    <string name="snow">Snow</string>
-    <string name="other">Other</string>
+    <string-array name="weather">
+        <item>High Temperature</item>
+        <item>Low Temperature</item>
+    </string-array>
+
+    <string-array name="conditions">
+        <item>Partly Cloudy</item>
+        <item>Cloudy</item>
+        <item>Windy</item>
+        <item>Rainy</item>
+        <item>Snow</item>
+        <item>Other</item>
+    </string-array>
 
     <string name="siteVisitors">Visitors to the site</string>
     <string name="inspections">Tests / Inspections</string>
@@ -62,5 +67,12 @@
 
 <!--  Confirm Request  -->
     <string name="confirmBtn">Confirm Request</string>
+
+<!--  Salary Request -->
+    <string name="empid">Id No</string>
+    <string name="empName">Name</string>
+    <string name="empTel">Mobile No</string>
+    <string name="empAmount">Amount</string>
+    <string name="submit">Submit</string>
 
 </resources>
