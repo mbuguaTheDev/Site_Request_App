@@ -1,65 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SiteRequestActivity"
-    android:orientation="vertical">
+    tools:context=".SalaryInputActivity">
 
 
             <EditText
                 android:id="@+id/empId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginVertical="20dp"
+                android:layout_marginHorizontal="30dp"
                 android:ems="10"
-                android:inputType="number"
+                android:inputType="text"
                 android:singleLine="true"
                 android:hint="@string/empid"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            <EditText
-                android:id="@+id/empName"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="none|text"
-                android:hint="@string/empName"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:layout_marginBottom="30dp"/>
 
-            <EditText
-                android:id="@+id/empTel"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:ems="10"
-                android:hint="@string/empTel"
-                android:inputType="number"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    <Button
+        android:id="@+id/employeeFetch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/empId"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/fetch"
+        android:textSize="20sp"
+        android:onClick="employeeFetch"
+        android:layout_centerHorizontal="true"/>
 
-            <EditText
-                android:id="@+id/empAmount"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:ems="10"
-                android:hint="@string/empAmount"
-                android:inputType="number"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/employeeFetch"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="30dp">
 
+        <TextView
+            android:id="@+id/employeeId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/salarySubmit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:text="@string/submit"
-                android:textSize="20sp"
-                android:layout_marginTop="15dp"/>
-</LinearLayout>
+        <TextView
+            android:id="@+id/employeeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/jobGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/siteName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/siteId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/empPay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/salarySubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/submit"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

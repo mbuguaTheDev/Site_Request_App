@@ -4,76 +4,130 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.xml.transform.Result;
 
 public class SalaryInputActivity extends AppCompatActivity {
 
-    EditText empId, empName, empTel, empAmount;
-    Button salarySubmit;
     private SqlConnection sqlConnection;
+    Button employeeFetch, submit;
+    TextView idNo, empName, jbGroup, sName, sId, empPay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_salary_input);
+        sqlConnection = new SqlConnection(); //instantiate connection
 
-        sqlConnection = new SqlConnection();
-
-        empId = findViewById(R.id.empId);
-        empName = findViewById(R.id.empName);
-        empTel = findViewById(R.id.empTel);
-        empAmount = findViewById(R.id.empAmount);
-        salarySubmit = findViewById(R.id.salarySubmit);
-
-        salarySubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                salarySubmit();
-            }
-        });
+        submit = findViewById(R.id.salarySubmit);
+        submit.setVisibility(View.GONE);
     }
 
-    public  void salarySubmit (){
+    public  void employeeFetch(View view){
 
-        String idNO = empId.getText().toString();
-        String mobileNo = empTel.getText().toString();
-        String name = empName.getText().toString();
-        String amount = empAmount.getText().toString();
+        //get date
+        Date cDate = new Date();
+        final String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
+
+
+        SqlConnection sqlConnection = new SqlConnection();
+        final String employeeId, employeeName, jobGroup, siteName, siteId, employeePay;
+        EditText empId = findViewById(R.id.empId);
+        employeeId = empId.getText().toString();
+
+        idNo = findViewById(R.id.employeeId);
+        empName = findViewById(R.id.employeeName);
+        jbGroup = findViewById(R.id.jobGroup);
+        sName = findViewById(R.id.siteName);
+        sId = findViewById(R.id.siteId);
+        empPay = findViewById(R.id.empPay);
+        employeeFetch = findViewById(R.id.employeeFetch);
+
+
+
 
         try {
-            Statement statement;
-            Connection conn = sqlConnection.Connect(); //Connection Object
-            statement = conn.createStatement();
-            String empIdQuery ="SELECT * from pay WHERE empid = '"+empId+"'";
-            ResultSet rs = statement.executeQuery(empIdQuery);
+            final Statement[] statement = new Statement[1];
+            final Connection conn = sqlConnection.Connect(); //Connection Object
+            statement[0] = conn.createStatement();
+            String empIdQuery ="SELECT idno, name, job, site, sid, pay FROM worker WHERE idno = '"+ employeeId +"'";
+            ResultSet rs = statement[0].executeQuery(empIdQuery);
 
-            if (!rs.next()){
-                Toast.makeText(this, "Request Already posted", Toast.LENGTH_SHORT).show();
-            }else{
+            if (rs.next()){
+
+                //emmpty the Id field
                 empId.setText("");
-                empTel.setText("");
-                empName.setText("");
-                empAmount.setText("");
 
-                String salaryReqQuery = "INSERT INTO pay (empid, empname, emptell, emppay, status, paydate) VALUES ('"+idNO+"', '"+name+"', '"+mobileNo+"', '"+amount+"', 'posted', 'today',)";
-                statement.executeQuery(salaryReqQuery);
+                //get details
+                employeeName = rs.getString("name");
+                jobGroup = rs.getString("job");
+                siteName = rs.getString("site");
+                siteId = rs.getString("sid");
+                employeePay = rs.getString("pay");
 
-                Toast.makeText(this, "Salary Request Posted", Toast.LENGTH_SHORT).show();
+                //populate on the view
+                idNo.setText("Id No: " + employeeId);
+                empName.setText("Name: " + employeeName);
+                jbGroup.setText("Job Group: " + jobGroup);
+                sName.setText("Site: " + siteName);
+                sId.setText("Site Id: " + siteId);
+                empPay.setText("Pay: " + employeePay);
+
+                //make submit button visible
+                submit.setVisibility(View.VISIBLE);
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        try{
+                            statement[0] = conn.createStatement();
+                            String slryCheckQuery= "SELECT * FROM pay WHERE empid = '"+ employeeId +"' AND date = '"+fDate+"' ";
+                            ResultSet result = statement[0].executeQuery(slryCheckQuery);
+
+                            if (result.next()){
+                                Toast.makeText(SalaryInputActivity.this, "Pay Request Already Submitted", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                String salaryQuery = "INSERT INTO pay (empid, empname, emppay, siteid, sitename, jgroup) VALUES ('"+employeeId+"', '"+employeeName+"', '"+employeePay+"', '"+siteId+"', '"+siteName+"', '"+jobGroup+"')";
+
+                                //clear texts
+                                idNo.setText("");
+                                empName.setText("");
+                                jbGroup.setText("");
+                                sName.setText("");
+                                sId.setText("");
+                                empPay.setText("");
+
+                                Toast.makeText(SalaryInputActivity.this, "Pay Request Submitted", Toast.LENGTH_SHORT).show();
+
+                                submit.setVisibility(View.GONE);
+                            }
+
+                        }catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }else{
+                Toast.makeText(this, "Employee Does Not Exist", Toast.LENGTH_SHORT).show();
+
             }
-
-
         }catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
+
 }

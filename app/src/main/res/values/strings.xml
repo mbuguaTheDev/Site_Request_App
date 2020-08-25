@@ -74,5 +74,6 @@
     <string name="empTel">Mobile No</string>
     <string name="empAmount">Amount</string>
     <string name="submit">Submit</string>
+    <string name="fetch">Fetch</string>
 
 </resources>
