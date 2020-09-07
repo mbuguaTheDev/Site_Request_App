@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -142,7 +142,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
                     success = false;
                 }
                 else {
-                    String query = "select pname,rqty,units,day from request where status = 'pending' and aid = '"+agentId+"' ";
+                    String query = "select id, pname, rqty, units,day from request where status = 'pending' and aid = '"+agentId+"' ";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null)
@@ -150,7 +150,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
                         while (rs.next())
                         {
                             try {
-                                itemArrayList.add(new RequestedItemsModel(rs.getString("pname"),rs.getString("rqty"),rs.getString("units"), rs.getString("day")));
+                                itemArrayList.add(new RequestedItemsModel(rs.getString("pname"),rs.getString("rqty"),rs.getString("units"), rs.getString("day"), rs.getString("id")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -178,7 +178,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
         {
             progress.dismiss();
             Toast.makeText(RequestedItemsActivity.this, msg + "", Toast.LENGTH_LONG).show();
-            if (success == false) {
+            if (!success) {
 
             }
             else {
@@ -186,6 +186,14 @@ public class RequestedItemsActivity extends AppCompatActivity {
                 {
                     myAppAdapter = new MyAppAdapter(itemArrayList , RequestedItemsActivity.this);
                     recyclerView.setAdapter(myAppAdapter);
+                    myAppAdapter.setOnItemClickListener(new MyAppAdapter.OnItemClickListener() {
+                        @Override
+                        public void onDeleteCLick(int position) {
+                            itemArrayList.remove(position);
+                            myAppAdapter.notifyItemRemoved(position);
+                            //removeItem();
+                        }
+                    });
                 } catch (Exception ex)
                 {
 
@@ -195,25 +203,52 @@ public class RequestedItemsActivity extends AppCompatActivity {
         }
     }
 
-    public class MyAppAdapter extends RecyclerView.Adapter<MyAppAdapter.ViewHolder> {
+    public static class MyAppAdapter extends RecyclerView.Adapter<MyAppAdapter.ViewHolder> {
         private List<RequestedItemsModel> values;
         public Context context;
+
+        private OnItemClickListener mListener;
+
+        public interface OnItemClickListener {
+            void onDeleteCLick(int position);
+        }
+
+        public void setOnItemClickListener (OnItemClickListener listener){
+            mListener = listener;
+        }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public TextView pName;
             public TextView qty;
             public TextView units;
             public TextView needed;
+            public ImageButton deleteRequest;
 
             public View layout;
 
-            public ViewHolder(View v) {
+            public ViewHolder(View v, final OnItemClickListener listener) {
                 super(v);
                 layout = v;
                 pName = v.findViewById(R.id.item);
                 qty = v.findViewById(R.id.qty);
                 units = v.findViewById(R.id.units);
                 needed = v.findViewById(R.id.needed);
+                deleteRequest = v.findViewById(R.id.deleteRequest);
+
+
+
+                deleteRequest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (listener !=null){
+                            int position = getAdapterPosition();
+                            if (position != RecyclerView.NO_POSITION){
+                                listener.onDeleteCLick(position);
+                            }
+                        }
+
+                    }
+                });
 
             }
         }
@@ -230,7 +265,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
             // create a new view
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             View v = inflater.inflate(R.layout.requested_items_content, parent, false);
-            ViewHolder vh = new ViewHolder(v);
+            ViewHolder vh = new ViewHolder(v, mListener);
             return vh;
         }
 
@@ -243,6 +278,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
             holder.qty.setText(requestedItems.getQty());
             holder.units.setText(requestedItems.getUnits());
             holder.needed.setText(requestedItems.getNeeded());
+            holder.itemView.setTag(requestedItems.getRqId());
 
         }
 
@@ -255,5 +291,29 @@ public class RequestedItemsActivity extends AppCompatActivity {
 
 
     }
+
+
+    public void removeItem (MyAppAdapter.ViewHolder holder){
+        String rqId = holder.itemView.getTag().toString();
+        try {
+
+            Statement statement;
+            Connection conn = sqlConnection.Connect(); //Connection Object
+            statement = conn.createStatement();
+            String postOrderQuery = "DELETE * FROM request WHERE id = '" + rqId + "' ";
+            statement.executeQuery(postOrderQuery);
+
+            Toast.makeText(this, "Removed Successfully", Toast.LENGTH_SHORT).show();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
+
+
 
 }

@@ -99,7 +99,15 @@ public class SalaryInputActivity extends AppCompatActivity {
                                 Toast.makeText(SalaryInputActivity.this, "Pay Request Already Submitted", Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                String salaryQuery = "INSERT INTO pay (empid, empname, emppay, siteid, sitename, jgroup) VALUES ('"+employeeId+"', '"+employeeName+"', '"+employeePay+"', '"+siteId+"', '"+siteName+"', '"+jobGroup+"')";
+
+                                try{
+                                    statement[0] = conn.createStatement();
+                                    String salaryQuery = "INSERT INTO pay (empid, empname, emppay, siteid, sitename, jgroup) VALUES ('"+employeeId+"', '"+employeeName+"', '"+employeePay+"', '"+siteId+"', '"+siteName+"', '"+jobGroup+"')";
+                                    statement[0].executeQuery(salaryQuery);
+
+                                }catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
 
                                 //clear texts
                                 idNo.setText("");
@@ -110,7 +118,6 @@ public class SalaryInputActivity extends AppCompatActivity {
                                 empPay.setText("");
 
                                 Toast.makeText(SalaryInputActivity.this, "Pay Request Submitted", Toast.LENGTH_SHORT).show();
-
                                 submit.setVisibility(View.GONE);
                             }
 
@@ -121,6 +128,7 @@ public class SalaryInputActivity extends AppCompatActivity {
                 });
 
             }else{
+
                 Toast.makeText(this, "Employee Does Not Exist", Toast.LENGTH_SHORT).show();
 
             }

@@ -14,16 +14,16 @@ public class SqlConnection {
     // sql connection variables
 
     //live
-    String ip = "fsn201.truehost.cloud:1434";
-    String db = "site";
-    String user = "admin";
-    String password = "waramba@#12maxwell";
-
-//    //local
-//    String ip = "192.168.0.13:49170";
+//    String ip = "fsn201.truehost.cloud:1434";
 //    String db = "site";
 //    String user = "admin";
-//    String password = "admin";
+//    String password = "waramba@#12maxwell";
+
+//    //local
+    String ip = "192.168.0.17:49170";
+    String db = "site";
+    String user = "admin";
+    String password = "admin";
 
 
 

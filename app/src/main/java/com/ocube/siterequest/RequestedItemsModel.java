@@ -5,13 +5,15 @@ public class RequestedItemsModel {
     public String qty;
     public String units;
     public String needed;
+    public String rqId;
 
 
-    public RequestedItemsModel(String item, String qty, String units, String needed) {
+    public RequestedItemsModel(String item, String qty, String units, String needed, String rqId) {
         this.item = item;
         this.qty = qty;
         this.units = units;
         this.needed = needed;
+        this.rqId = rqId;
     }
 
     public String getItem() {
@@ -28,6 +30,10 @@ public class RequestedItemsModel {
 
     public String getNeeded() {
         return needed;
+    }
+
+    public String getRqId() {
+        return rqId;
     }
 }
 

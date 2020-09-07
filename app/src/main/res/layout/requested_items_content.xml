@@ -43,4 +43,12 @@
         android:layout_toEndOf="@+id/units"
         android:textSize="18sp"/>
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:id="@+id/deleteRequest"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/needed"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/ic_delete" />
+
 </RelativeLayout>

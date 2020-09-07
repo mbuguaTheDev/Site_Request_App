@@ -10,6 +10,7 @@
 
     <!--    main home screen-->
     <string name="mainWelcome">Welcome. What do you want to do today?</string>
+    <string name="selectSite">Select Site:</string>
     <string name="siteReqBtn">SITE REQUEST</string>
     <string name="DailyRptBtn">DAILY REPORT</string>
     <string name="SalaryInputBtn">SALARY INPUT</string>
@@ -17,6 +18,7 @@
 
     <!--  supply request screen  -->
     <string name="newRequest">New Site Request</string>
+    <string name="addItemImage">Upload item image</string>
     <string name="itemInput">Product Name</string>
     <string name="qtyInput">Quantity E.g 2</string>
     <string name="units">Units E.g Cartons</string>
