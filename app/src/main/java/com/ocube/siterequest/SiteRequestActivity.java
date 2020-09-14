@@ -48,6 +48,7 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
     byte[] byteArray;
     String encodedImage;
     ImageView itemimage;
+    Button addItemImage;
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -65,6 +66,7 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
         siteName = sharedPreferences.getString(SITE_NAME, "site");
 
         itemimage = findViewById(R.id.itemImage);
+        addItemImage = findViewById(R.id.addItemImage);
 
         checkReqStatus();
         getItemsList();
@@ -118,13 +120,16 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
                     ResultSet rs = statement.executeQuery(reqIdQuery);
                     if (rs.next()){
                         String requestId = rs.getString("id");
-                        String query2= "INSERT  INTO  request (sid, aid, date, pid, pname, rqty, units, requestid) VALUES('"+ siteId + "','" + agentId + "','2020-01-01','1','" + pname + "','" + qty + "','"+unit+"', '"+requestId+"') ";
+                        String query2= "INSERT  INTO  request (sid, aid, date, pid, pname, rqty, units, requestid, image) VALUES('"+ siteId + "','" + agentId + "','2020-01-01','1','" + pname + "','" + qty + "','"+unit+"', '"+requestId+"', '"+encodedImage+"') ";
                         statement.executeQuery(query2);
+
                     }
 
                 }catch (SQLException e) {
                     e.printStackTrace();
                 }
+                //remove the image bitmap
+                itemimage.setImageBitmap(null);
 
             }else{
                 Toast.makeText(this,"Item Does Not Exist",Toast.LENGTH_SHORT).show();
@@ -265,6 +270,7 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
             if (originBitmap != null) {
 
                 this.itemimage.setImageBitmap(originBitmap);
+                addItemImage.setVisibility(View.GONE);
 
                 try
                 {
@@ -274,16 +280,16 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
                     byteArray = byteArrayOutputStream.toByteArray();
                     encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
+
                     // Calling the background process so that application wont slow down
-                    UploadImage uploadImage = new UploadImage();
-                    uploadImage.execute("");
+//                    UploadImage uploadImage = new UploadImage();
+//                    uploadImage.execute("");
 
                 }
                 catch (Exception e)
                 {
                     Log.w("OOooooooooo","exception");
                 }
-                Toast.makeText(this, "Conversion Done",Toast.LENGTH_SHORT).show();
             }
             // End getting the selected image, setting in imageview and converting it to byte and base 64
         }
@@ -293,57 +299,57 @@ public class SiteRequestActivity extends AppCompatActivity implements AdapterVie
         }
     }
 
-    public class UploadImage extends AsyncTask<String,String,String>
-    {
-        @Override
-        protected void onPostExecute(String r)
-        {
-            // After successful insertion of image
-            itemimage.setVisibility(View.GONE);
-            Toast.makeText(SiteRequestActivity.this, "Image Inserted Succesfully", Toast.LENGTH_SHORT).show();
-        }
-        @Override
-        protected String doInBackground(String... params) {
-
-            // Inserting in the database
-            String msg;
-
-            try
-            {
-                Statement statement;
-                Connection conn = sqlConnection.Connect(); //Connection Object
-                statement = conn.createStatement();
-                String insertImageQuery = "Insert into request (image) values ('" + encodedImage + "')";
-                statement.executeQuery(insertImageQuery);
-
-                msg = "Inserted Successfully" + encodedImage;
-            }
-            catch (SQLException ex) {
-                msg = ex.getMessage().toString();
-                Log.d("Error no 1:", msg);
-            }
-
-            catch (IOError ex) {
-                msg = ex.getMessage().toString();
-                Log.d("Error no 2:", msg);
-            }
-            catch (AndroidRuntimeException ex) {
-                msg = ex.getMessage().toString();
-                Log.d("Error no 3:", msg);
-            }
-            catch (NullPointerException ex) {
-                msg = ex.getMessage().toString();
-                Log.d("Error no 4:", msg);
-            }
-            catch (Exception ex) {
-                msg = ex.getMessage().toString();
-                Log.d("Error no 5:", msg);
-            }
-            System.out.println(msg);
-            return "";
-            //End Inserting in the database
-        }
-    }
+//    public class UploadImage extends AsyncTask<String,String,String>
+//    {
+//        @Override
+//        protected void onPostExecute(String r)
+//        {
+//            // After successful insertion of image
+//            //itemimage.setVisibility(View.GONE);
+//            Toast.makeText(SiteRequestActivity.this, "Image Inserted Succesfully", Toast.LENGTH_SHORT).show();
+//        }
+//        @Override
+//        protected String doInBackground(String... params) {
+//
+//            // Inserting in the database
+//            String msg;
+//
+//            try
+//            {
+//                Statement statement;
+//                Connection conn = sqlConnection.Connect(); //Connection Object
+//                statement = conn.createStatement();
+//                String insertImageQuery = "Insert into request (image) values ('" + encodedImage + "')";
+//                statement.executeQuery(insertImageQuery);
+//
+//                msg = "Inserted Successfully" + encodedImage;
+//            }
+//            catch (SQLException ex) {
+//                msg = ex.getMessage().toString();
+//                Log.d("Error no 1:", msg);
+//            }
+//
+//            catch (IOError ex) {
+//                msg = ex.getMessage().toString();
+//                Log.d("Error no 2:", msg);
+//            }
+//            catch (AndroidRuntimeException ex) {
+//                msg = ex.getMessage().toString();
+//                Log.d("Error no 3:", msg);
+//            }
+//            catch (NullPointerException ex) {
+//                msg = ex.getMessage().toString();
+//                Log.d("Error no 4:", msg);
+//            }
+//            catch (Exception ex) {
+//                msg = ex.getMessage().toString();
+//                Log.d("Error no 5:", msg);
+//            }
+//            System.out.println(msg);
+//            return "";
+//            //End Inserting in the database
+//        }
+//    }
 
 
 }

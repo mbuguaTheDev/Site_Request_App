@@ -180,18 +180,36 @@ public class RequestedItemsActivity extends AppCompatActivity {
             Toast.makeText(RequestedItemsActivity.this, msg + "", Toast.LENGTH_LONG).show();
             if (!success) {
 
+
             }
             else {
+
                 try
                 {
                     myAppAdapter = new MyAppAdapter(itemArrayList , RequestedItemsActivity.this);
                     recyclerView.setAdapter(myAppAdapter);
                     myAppAdapter.setOnItemClickListener(new MyAppAdapter.OnItemClickListener() {
                         @Override
-                        public void onDeleteCLick(int position) {
+                        public void onDeleteCLick(int position, String rqId) {
+
+                            //remove item from list
                             itemArrayList.remove(position);
                             myAppAdapter.notifyItemRemoved(position);
-                            //removeItem();
+
+                            //remove item from db
+                            try {
+                                Statement statement;
+                                Connection conn = sqlConnection.Connect(); //Connection Object
+                                statement = conn.createStatement();
+                                String postOrderQuery = "DELETE FROM request where id = '"+rqId+"' ";
+                                statement.executeQuery(postOrderQuery);
+
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            Toast.makeText(RequestedItemsActivity.this, "Removed Successfully", Toast.LENGTH_SHORT).show();
+
+
                         }
                     });
                 } catch (Exception ex)
@@ -210,7 +228,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
         private OnItemClickListener mListener;
 
         public interface OnItemClickListener {
-            void onDeleteCLick(int position);
+            void onDeleteCLick(int position, String rqId);
         }
 
         public void setOnItemClickListener (OnItemClickListener listener){
@@ -242,8 +260,9 @@ public class RequestedItemsActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         if (listener !=null){
                             int position = getAdapterPosition();
+                            String rqId = ViewHolder.this.itemView.getTag().toString();
                             if (position != RecyclerView.NO_POSITION){
-                                listener.onDeleteCLick(position);
+                                listener.onDeleteCLick(position, rqId);
                             }
                         }
 
@@ -292,27 +311,6 @@ public class RequestedItemsActivity extends AppCompatActivity {
 
     }
 
-
-    public void removeItem (MyAppAdapter.ViewHolder holder){
-        String rqId = holder.itemView.getTag().toString();
-        try {
-
-            Statement statement;
-            Connection conn = sqlConnection.Connect(); //Connection Object
-            statement = conn.createStatement();
-            String postOrderQuery = "DELETE * FROM request WHERE id = '" + rqId + "' ";
-            statement.executeQuery(postOrderQuery);
-
-            Toast.makeText(this, "Removed Successfully", Toast.LENGTH_SHORT).show();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
 
 
 
