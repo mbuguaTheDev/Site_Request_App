@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button siteRequest = findViewById(R.id.siteRequest);
         Button dailyReport = findViewById(R.id.dailyReport);
         Button salaryInput = findViewById(R.id.salaryInput);
+        Button searchImage = findViewById(R.id.searchImgBtn);
         welcomeText  = findViewById(R.id.welcomeText);
         currentSite = findViewById(R.id.currentSite);
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         siteRequest.setOnClickListener(this);
         dailyReport.setOnClickListener(this);
         salaryInput.setOnClickListener(this);
+        searchImage.setOnClickListener(this);
 
         //show welcome text with username
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
@@ -83,6 +85,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.salaryInput:
                 Intent salaryInputScreen = new Intent(this, SalaryInputActivity.class);
                 startActivity(salaryInputScreen);
+                break;
+
+            case R.id.searchImgBtn:
+                Intent searchImageScreen = new Intent(this, SearchImageActivity.class);
+                startActivity(searchImageScreen);
                 break;
         }
 

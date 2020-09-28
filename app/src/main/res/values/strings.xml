@@ -14,6 +14,7 @@
     <string name="siteReqBtn">SITE REQUEST</string>
     <string name="DailyRptBtn">DAILY REPORT</string>
     <string name="SalaryInputBtn">SALARY INPUT</string>
+    <string name="searchImage">Search Image</string>
 
 
     <!--  supply request screen  -->
@@ -33,22 +34,6 @@
     <!-- Daily Report form fields-->
     <string name="dailyRptWelcome">Submit your daily report</string>
     <string name="Temp">Temperature</string>
-
-
-    <string-array name="weather">
-        <item>High Temperature</item>
-        <item>Low Temperature</item>
-    </string-array>
-
-    <string-array name="conditions">
-        <item>Partly Cloudy</item>
-        <item>Cloudy</item>
-        <item>Windy</item>
-        <item>Rainy</item>
-        <item>Snow</item>
-        <item>Other</item>
-    </string-array>
-
     <string name="siteVisitors">Visitors to the site</string>
     <string name="inspections">Tests / Inspections</string>
     <string name="accidents">Accidents, Injuries or Unusual Events</string>
@@ -60,22 +45,38 @@
     <string name="preparedBy">Prepared By</string>
     <string name="conditions">CONDITIONS</string>
     <string name="weather">WEATHER</string>
-
-<!--  Resuested items header  -->
     <string name="itemRq">Item</string>
     <string name="quantityRq">Qty</string>
+
+    <!--  Resuested items header  -->
     <string name="unitsRq">Units</string>
     <string name="neededIn">Days</string>
-
-<!--  Confirm Request  -->
     <string name="confirmBtn">Confirm Request</string>
-
-<!--  Salary Request -->
     <string name="empid">Id No</string>
+
+    <!--  Confirm Request  -->
     <string name="empName">Name</string>
+
+    <!--  Salary Request -->
     <string name="empTel">Mobile No</string>
     <string name="empAmount">Amount</string>
     <string name="submit">Submit</string>
     <string name="fetch">Fetch</string>
+    <string-array name="weather">
+        <item>High Temperature</item>
+        <item>Low Temperature</item>
+    </string-array>
+    <string-array name="conditions">
+        <item>Partly Cloudy</item>
+        <item>Cloudy</item>
+        <item>Windy</item>
+        <item>Rainy</item>
+        <item>Snow</item>
+        <item>Other</item>
+    </string-array>
+
+<!--    Search Image Activity -->
+    <string name="requestId">Enter Request Id</string>
+    <string name="search">Search</string>
 
 </resources>

@@ -64,7 +64,7 @@ public class RequestedItemsActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
