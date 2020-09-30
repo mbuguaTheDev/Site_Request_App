@@ -3,19 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="120dp">
 
     <ImageView
         android:id="@+id/decodedImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="Item Name"
+        app:layout_constraintStart_toEndOf="@+id/decodedImage"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <TextView-->
+    <TextView
+        android:id="@+id/itemQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Item Qty"
+        app:layout_constraintStart_toEndOf="@+id/decodedImage"
+        app:layout_constraintTop_toBottomOf="@+id/itemName" />
+
+    <TextView
+        android:id="@+id/itemUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Item Units"
+        app:layout_constraintStart_toEndOf="@+id/decodedImage"
+        app:layout_constraintTop_toBottomOf="@+id/itemQty" />
+
+
+    <!--    <TextView-->
 <!--        android:id="@+id/encodedImage"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->

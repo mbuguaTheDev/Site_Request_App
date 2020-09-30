@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.PrintWriter;
@@ -82,13 +83,13 @@ public class SearchImageActivity extends AppCompatActivity {
         {
             try
             {
-                Connection conn = sqlConnection.Connect(); //Connection Object
+                Connection conn = sqlConnection.Connect();
                 if (conn == null)
                 {
                     success = false;
                 }
                 else {
-                    String query = "SELECT image FROM request WHERE requestid = '"+reqId+"'";
+                    String query = "SELECT image, pname, rqty, units FROM request WHERE requestid = '"+reqId+"'";
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs != null)
@@ -96,7 +97,7 @@ public class SearchImageActivity extends AppCompatActivity {
                         while (rs.next())
                         {
                             try {
-                                imageArrayList.add(new ImagesModel(rs.getString("image")));
+                                imageArrayList.add(new ImagesModel(rs.getString("image"), rs.getString("pname"), rs.getString("rqty"), rs.getString("units")));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -152,6 +153,9 @@ public class SearchImageActivity extends AppCompatActivity {
         {
 
             public ImageView decodedImage;
+            public TextView itemName;
+            public TextView itemQty;
+            public TextView itemUnits;
             public View layout;
 
             public ViewHolder(View v)
@@ -159,6 +163,9 @@ public class SearchImageActivity extends AppCompatActivity {
                 super(v);
                 layout = v;
                 decodedImage = v.findViewById(R.id.decodedImage);
+                itemName = v.findViewById(R.id.itemName);
+                itemQty = v.findViewById(R.id.itemQty);
+                itemUnits = v.findViewById(R.id.itemUnits);
 
             }
         }
@@ -170,7 +177,7 @@ public class SearchImageActivity extends AppCompatActivity {
             this.context = context;
         }
 
-        // Create new views (invoked by the layout manager) and inflates
+        // Create new views (invoked by the layout manager) and inflate
         @Override
         public ImagesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
@@ -189,7 +196,9 @@ public class SearchImageActivity extends AppCompatActivity {
             byte[] encodedString = Base64.decode(imagesModel.getImageString(), Base64.DEFAULT);
             Bitmap decoded = BitmapFactory.decodeByteArray(encodedString, 0, encodedString.length);
             holder.decodedImage.setImageBitmap(decoded);
-
+            holder.itemName.setText(imagesModel.getItemName());
+            holder.itemQty.setText(imagesModel.getItemQty());
+            holder.itemUnits.setText(imagesModel.getItemUnits());
 
         }
 
